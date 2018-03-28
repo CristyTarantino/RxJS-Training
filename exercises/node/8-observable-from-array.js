@@ -2,7 +2,9 @@ const Rx = require('rxjs/Rx');
 
 const data = ['apples', 'bananas', 'oranges'];
 
-//TODO: create an observable the `data` array with `Observable.from`
+//create an observable the `data` array with `Observable.from`
+//useful for stabbing data to fake api
+const source$ = Rx.Observable.of(data);
 
 console.log('start');
 source$.subscribe(
@@ -24,3 +26,16 @@ console.log('stop');
 
 // Notice the output is _synchronous_ again, because arrays are consumed
 // synchronously
+
+// To run async then
+// const source$ = Rx.Observable.of(data, Rx.Scheduler.asap);
+
+/**
+ NOTE: expected output
+ start
+ stop
+ foo
+ bar
+ baz
+ done
+ */
