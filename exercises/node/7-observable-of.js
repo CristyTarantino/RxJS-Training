@@ -1,7 +1,7 @@
 const Rx = require('rxjs/Rx');
 
-//TODO: create an observable of 'foo', 'bar' and 'baz' with `Observable.of`
-
+// create an observable of 'foo', 'bar' and 'baz' with `Observable.of`
+const source$ = Rx.Observable.of('foo', 'bar', 'baz');
 
 console.log('start');
 source$.subscribe(
@@ -10,6 +10,8 @@ source$.subscribe(
   () => console.info('done')
 );
 console.log('stop');
+
+// run node exercises/node/7-observable-of.js
 
 /**
   NOTE: expected output
@@ -22,3 +24,16 @@ console.log('stop');
 */
 
 // Notice the output is _synchronous_!!
+
+// To run async then
+// const source$ = Rx.Observable.of('foo', 'bar', 'baz', Rx.Scheduler.asap);
+
+/**
+ NOTE: expected output
+ start
+ stop
+ foo
+ bar
+ baz
+ done
+ */
