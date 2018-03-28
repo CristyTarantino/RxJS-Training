@@ -4,7 +4,8 @@ const Rx = require('rxjs/Rx');
 // that supports the iterable interface.
 const iterable = require('./fixtures/10-iterable');
 
-//TODO: create an observable the `data` array with `Observable.from`
+//create an observable the `data` array with `Observable.from`
+const source$ = Rx.Observable.from(iterable);
 
 console.log('start');
 source$.subscribe(
@@ -13,6 +14,8 @@ source$.subscribe(
   () => console.info('done')
 );
 console.log('stop');
+
+// run node exercises/node/10-observable-from-iterable.js
 
 /**
   NOTE: expected output
@@ -31,3 +34,12 @@ console.log('stop');
 // synchronously
 
 // NOTE: Bonus/gotcha... Strings are iterables in JavaScript. Try it out.
+const source1$ = Rx.Observable.from('ciao');
+
+console.log('start');
+source1$.subscribe(
+    x => console.log(x),
+    err => console.error(err),
+    () => console.info('done')
+);
+console.log('stop');
