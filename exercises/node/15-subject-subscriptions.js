@@ -11,13 +11,17 @@ const subB = subject.subscribe(observerB);
 
 subject.next(1);
 subject.next(2);
+
+// Add code to unsubscribe observerA after the first two values
+subA.unsubscribe();
 subject.next(3);
 subject.next(4);
-subject.next(5);
-subject.complete();
 
-// TODO: Add code to unsubscribe observerA after the first two values
-// TODO: Add code to unsubscribe observerB after the first four values
+// Add code to unsubscribe observerB after the first four values
+subB.unsubscribe();
+subject.next(5);
+
+subject.complete();
 
 /**
   NOTE: expected output
