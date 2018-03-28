@@ -22,3 +22,5 @@ console.log('stop');
 */
 
 // Notice the output is _asynchronous_, because promises are an async value
+
+// The situations in which you want a promise is when you only have one value and you do not want it to be cancellable
