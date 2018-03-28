@@ -7,12 +7,34 @@ const fizzObserver = createLoggingObserver('fizz');
 const buzzObserver = createLoggingObserver('buzz');
 const fizzbuzzObserver = createLoggingObserver('fizzbuzz');
 
-/** TODO:
+/**
   `scarce$` will error if you subscribe to it more than once!!
   1. Notify `fizzObserver` of all values from `scarce$` divisible by 3.
   2. Notify `buzzObserver` of all values from `scarce$` divisible by 5.
   3. Notify `fizzbuzzObserver` of all values from `scarce$` divisible by 3 AND 5.
 */
+
+// scare$.subscribe();
+// scare$.subscribe();
+// you will get error if you subscribe to it more than once!!
+
+const subject = new Subject();
+
+subject
+    .filter(x => x % 3 === 0)
+    .subscribe(fizzObserver);
+
+subject
+    .filter(x => x % 5 === 0)
+    .subscribe(buzzObserver);
+
+subject
+    .filter(x => x % 15 === 0)
+    .subscribe(fizzbuzzObserver);
+
+scarce$.subscribe(subject);
+
+//This is what is happening inside a multicast
 
 /**
   NOTE: expected output
