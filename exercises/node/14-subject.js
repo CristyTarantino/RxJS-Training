@@ -4,11 +4,23 @@ const createLoggingObserver = require('./helpers/createLoggingObserver');
 const observerA = createLoggingObserver('A');
 const observerB = createLoggingObserver('B');
 
-// TODO: Create and subscribe to a subject with `observerA` and `observerB`
-// TODO: synchronously notify the subject with values 1, 2, 3 via `next` and `complete`
-// TODO: Try nexting after complete.
-// TODO: Try the same thing with `subject.error()` instead of complete
+// Create and subscribe to a subject with `observerA` and `observerB`
+const subject = new Subject();
 
+subject.subscribe(observerA);
+subject.subscribe(observerB);
+
+// synchronously notify the subject with values 1, 2, 3 via `next` and `complete`
+subject.next(1);
+subject.next(2);
+subject.next(3);
+subject.complete();
+
+// Try nexting after complete.
+subject.next('ciao');
+
+// Try the same thing with `subject.error()` instead of complete
+subject.error(new Error('bad'));
 
 /**
   NOTE: expected output
