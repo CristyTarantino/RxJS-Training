@@ -3,10 +3,22 @@ const data$ = require('./fixtures/16-data');
 
 const subject = new Subject();
 
-/** TODO:
+/**
   1. Subscribe to `subject` and log it's output
   2. Use the `subject` to subscribe to `data$`
 */
+
+subject.subscribe(
+    x => console.log(x),
+    err => console.error(err),
+    () => console.info('done')
+);
+
+
+data$.subscribe(subject);
+
+
+// you need to subscribe before you can nest an observer into the subject
 
 /**
   NOTE: expected output
