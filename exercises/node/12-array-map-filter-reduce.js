@@ -27,5 +27,26 @@ console.log(result);
 
 /**
   NOTE: expected output
-  50
-*/
+
+   result called 0
+   result called 1
+   result called 2
+   result called 3
+   result called 4
+   result called 5
+   result called 6
+   result called 7
+   result called 8
+   result called 9
+   map called 1
+   map called 3
+   map called 5
+   map called 7
+   map called 9
+   reduce called 0 2
+   reduce called 2 6
+   reduce called 8 10
+   reduce called 18 14
+   reduce called 32 18
+   50
+ */
