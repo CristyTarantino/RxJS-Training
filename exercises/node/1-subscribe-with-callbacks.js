@@ -13,7 +13,7 @@ data$.subscribe(
 
 // run node exercises/node/1-subscribe-with-callbacks.js
 
-//Output
+// expected output:
 // 0
 // 1
 // 2

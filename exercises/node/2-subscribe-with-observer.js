@@ -15,7 +15,7 @@ data$.subscribe(observer);
 
 // run node exercises/node/2-subscribe-with-observer.js
 
-//Output
+// expected output:
 // 0
 // 1
 // 2

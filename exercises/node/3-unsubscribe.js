@@ -17,7 +17,7 @@ setTimeout(() => {
 
 // run node exercises/node/3-unsubscribe.js
 
-// Output
+// expected output:
 // 0
 // 1
 // 2
