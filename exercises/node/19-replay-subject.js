@@ -19,16 +19,23 @@ const { meatspaceSystem, temp$ } = require('./fixtures/19-meatspace');
         demo code to run.
 */
 
-/** TODO:
+/**
   1. Notify all incoming users of the most recent THREE temperatures.
   2. Be sure the users don't have to wait for the first value.
 */
+
+const subject = new ReplaySubject(3); //case of this is the count
+
+temp$.subscribe(subject);
+
 meatspaceSystem((user) => {
-  // TODO: notify users with `user.sendTemperature(temp)`
+  // notify users with `user.sendTemperature(temp)`
+  const sub = subject.subscribe(temp => user.sendTemperature(temp));
 
   // `user.onleave` is called when the user stop watching values
   user.onleave = () => {
-    // TODO: stop sending temps to the user when they leave
+    // stop sending temps to the user when they leave
+    sub.unsubscribe();
   }
 });
 
