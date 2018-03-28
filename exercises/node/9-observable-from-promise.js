@@ -2,7 +2,8 @@ const Rx = require('rxjs/Rx');
 
 const promise = Promise.resolve('still useful!');
 
-//TODO: create an observable the `data` array with `Observable.from`
+//create an observable the `data` array with `Observable.from`
+const source$ = Rx.Observable.from(promise);
 
 console.log('start');
 source$.subscribe(
