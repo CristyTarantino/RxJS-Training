@@ -5,6 +5,10 @@ const observerA = createLoggingObserver('A');
 const observerB = createLoggingObserver('B');
 
 // Create and subscribe to a subject with `observerA` and `observerB`
+// Subjects are both Observable and Observer
+// the main reason to use them is to multicast
+// second main reason is to have an inperative way to put values into an observable chain
+// third is for backpressure management
 const subject = new Subject();
 
 subject.subscribe(observerA);
