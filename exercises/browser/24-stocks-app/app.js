@@ -16,12 +16,20 @@
   // ---------------------------------------------------------
 
   /**
-      TODO: create an subscribe to an observable that does the
+      create an subscribe to an observable that does the
             look ahead search
 
       NOTE: You don't have to keep the subscription to it, as it will
             be active for the life of this application.
   */
+
+  Rx.Observable.fromEvent(q, 'input')
+    .debounceTime(500) //only emit what is typed after 500ms to avoid spamming
+    .map(e => e.target.value)
+    .filter(x => x.length < 6)
+    .map(q => getSearchURL(q))
+    .switchMap(url => Rx.Observable.ajax.getJSON(url)) //get only the last typed value (switch)
+    .subscribe(showSuggestions);
 
   // TODO: setup a WebSocketSubject
 
