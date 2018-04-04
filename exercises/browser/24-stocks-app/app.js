@@ -26,15 +26,54 @@
   Rx.Observable.fromEvent(q, 'input')
     .debounceTime(500) //only emit what is typed after 500ms to avoid spamming
     .map(e => e.target.value)
-    .filter(x => x.length < 6)
+    .filter(x => x.length < 6) //filter only values that are less than 6 characters length
     .map(q => getSearchURL(q))
-    .switchMap(url => Rx.Observable.ajax.getJSON(url)) //get only the last typed value (switch)
-    .subscribe(showSuggestions);
+    .switchMap(url =>
+      Rx.Observable.ajax.getJSON(url)
+        .catch((err) => {         //by doing this you prevent to unsubscribe to the whole Observable
+          console.log('bad thing');
+          return Rx.Observable.empty();
+        })) //get only the last typed value (switch)
+    // .do(x => console.log(x)) //debug
+    .subscribe(results => showSuggestions(results));
 
-  // TODO: setup a WebSocketSubject
 
+  // without RxJS sample code for multiplex
+  //
+  // const socket = new WebSocket('ws://localhost:8080');
+  //
+  // socket.onopen = () => {
+  //   socket.send(JSON.stringify({type: 'sub', symbol: 'NFLX'}))
+  // };
+  //
+  // socket.onmessage = e => {
+  //   const data = JSON.parse(e.data);
+  //   //  do something with data
+  //   console.log(data);
+  // };
+  //
+  // socket.onclose = e => {
+  //
+  // };
+  // really complex code for a multiplex socket (one socket for multiple data streams)
+
+  // setup a WebSocket
+  const socket = Rx.Observable.webSocket('ws://localhost:8080');
+
+  // multiplex the web socket (then add retry logic)
   function getTickerStream(symbol) {
-    // TODO: multiplex the web socket (then add retry logic)
+    return socket.multiplex(
+      // factory to get subsciption message to send
+      () => JSON.stringify({type: 'sub', symbol}),
+      // factory to get the unsub to send on teardown
+      () => JSON.stringify({type: 'unsub', symbol}),
+      // a filter to get just the values you care about
+      // for this stream
+      data => data.symbol === symbol,
+    )
+      .map(x => x.price)
+      // retry to connenct to the server
+      .retryWhen(error$ => error$.switchMap(() => Rx.Observable.timer(1000)));
   };
 
   // ***************************************************************************
